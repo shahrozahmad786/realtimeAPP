@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Question;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
 {
@@ -14,28 +15,12 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        return Question::latest()->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+       Question::create($request->all());
     }
 
     /**
@@ -46,7 +31,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return $question;
     }
 
     /**
@@ -80,6 +65,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        return response('Deleted',Response::HTTP_NO_CONTENT);
     }
 }
